@@ -1,24 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from './View/Login'
+import Dashboard from './View/Dashboard'
+import Notfound from './View/Notfound'
+import { Layoutadmin } from "./Layout/Layoutadmin"
+import Licencekey from './View/Licencekey'
+import Logs from './View/Logs'
+import Selectlicence from './View/Selectlicence'
+import Addlicence from './View/Addlicence'
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <BrowserRouter>
+   <Routes>
+    <Route path='/'>
+      <Route index element={<Login />} />
+      <Route path='*' element={<Notfound />} />
+    </Route>
+    <Route path='/home' element={<Layoutadmin />}>
+          <Route index element={<Dashboard />} />
+          <Route path='/home/licencekey' element={<Licencekey />} />
+          <Route path='/home/logs' element={<Logs />} />
+          <Route path='/home/selectlicence' element={<Selectlicence />} />
+          <Route path='/home/addlicence' element={<Addlicence />} />
+          </Route>
+   </Routes>
+   </BrowserRouter>
   );
 }
 
