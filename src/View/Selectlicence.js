@@ -20,8 +20,25 @@ export default function Selectlicence() {
   const handleCopyClickS = () => {
     navigator.clipboard.writeText(licence.licencekeyS);
   };
+
   const handleCopyClickM = () => {
     navigator.clipboard.writeText(licence.licencekeyS);
+  };
+
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+  
+  const handleDateChange = (e) => {
+    const { value } = e.target;
+    setLicence((prevData) => ({
+      ...prevData,
+      expireon: new Date(value).getTime(),
+    }));
   };
 
   useEffect(() => {
@@ -49,8 +66,8 @@ export default function Selectlicence() {
   return (
     <div style={{padding: 30 , backgroundColor : "#F1F1F1" , width : "100%"}}>
       <div className='backspace' onClick={() => navigate(-1)}>
-        <FaArrowLeft />
-        <h2>{licence && licence.client}</h2>
+        <FaArrowLeft style={{cursor : 'pointer'}}/>
+        <h2 style={{cursor : 'pointer'}}>{licence && licence.client}</h2>
       </div>
       <div className='parts'>
           <div className='left-side-part'>
@@ -81,15 +98,22 @@ export default function Selectlicence() {
                   <FaCopy onClick={handleCopyClickS} style={{cursor:  "pointer"}}/>
                 </div>
               </div>
-              <div className='p2-machine-row'>
-              <label>Machine</label>
-                <div className='p2-machine_txt'>
-                  <label >{licence && licence.licencekeyM}</label>
-                  <FaCopy onClick={handleCopyClickM} style={{cursor:  "pointer"}}/>
+              {licence && licence.type !=='monoposte' 
+              
+              ? (
+                <>
+                <div className='p2-machine-row'>
+                <label>Machine</label>
+                  <div className='p2-machine_txt'>
+                    <label >{licence && licence.licencekeyM}</label>
+                    <FaCopy onClick={handleCopyClickM} style={{cursor:  "pointer"}}/>
+                  </div>
                 </div>
-              </div>
-              <label className='fivemachines'>vous avez 5 machines au maximum pour cette version d'application</label>
-            </div>
+                <label className='fivemachines'>vous avez 5 machines au maximum pour cette version d'application</label>
+                </>
+                
+              ) : (<></>)}
+             </div>
             <div className='left-side-p3'>
             <label>Upgrade plan</label>
               <div className='upgradebtn'>
@@ -104,6 +128,17 @@ export default function Selectlicence() {
               <div className= {licence && licence.version==='demo' ? 'cadreversionOn': 'cadreversionoff'} >
                 <label >Demo</label>
               </div>
+              <div className={licence && licence.version==='demo' ? 'dateEx' :'dateExx' }>
+              {licence && licence.version==='demo' ? (
+                <>
+                    <label >A expiré le</label>
+                    <input className='dateformat' type='date'
+                    value={formatDate(licence && licence.expireon)}
+                    onChange={handleDateChange}
+                   />
+                </>
+              ): (<label style={{textAlign : 'center'}}>Version a vie</label>)}
+              </div>
               <div className= {licence && licence.version==='demo' ? 'cadreversionoff': 'cadreversionOn'}>
                 <label >Complete</label>
               </div>
@@ -111,7 +146,8 @@ export default function Selectlicence() {
             <div className='right-side-p2'>
               <label className='appnotdeclared' >Cette clé de licence n'est reconnue sur aucune appareil</label>
             </div>
-            <button className='btndave'>Enregistrer</button>
+            <button style={{display : 'none'}} className='btndave'
+            >Enregistrer</button>
           </div>
       </div>
     </div>

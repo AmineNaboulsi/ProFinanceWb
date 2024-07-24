@@ -54,6 +54,7 @@ product page
 .pageproduct{
   padding: .5rem 3rem;
   width: 100%;
+  background-color: #F1F1F1;
 }
 .pageproduct h1{
   font-weight: 400;
@@ -211,21 +212,23 @@ product page
   padding: 8px 5px 8px 5px;
 }
 .cardtypeB{
-  display : 'flex';
+  display : flex;
   flex-direction: 'row' ;
+  align-items: center;
+  justify-content: center;
+
   padding: 8px 5px 8px 5px;
   border: 1px solid #D6D6D6;
   border-radius: 10px;
-  align-content: center;
 }
 .cardtypeA{
-  display : 'flex';
+  display : flex;
   flex-direction: 'row' ;
-  padding : 15;
+  align-items: center;
   padding: 8px 5px 8px 5px;
   border: 1px solid #000;
   border-radius: 10px;
-  align-content: center;
+  justify-content: center;
 }
 .typespace{
   display : grid;
@@ -308,4 +311,25 @@ product page
   justify-content: center;
   align-items: center;
   height: 215px;
+}
+
+/* add licence */
+
+.dateformat{
+  padding: 8px 5px 8px 5px;
+  border-radius: 10px;
+  border: .5px solid #d6d6d6;
+}
+.dateformat:focus{
+  border-radius: 10px;
+  border: .5px solid #000;
+}
+.dateEx{
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  align-items: center;
+}
+.dateExx{
+  text-align: center;
+  font-weight: 600;
 }

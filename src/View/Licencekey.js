@@ -33,7 +33,7 @@ export default function Licencekey (){
     if (day < 10) day = '0' + day;
     if (month < 10) month = '0' + month;
   
-    return `${day}-${month}-${year}`;
+    return `${month}-${day}-${year}`;
   };
 
   const calculateDaysDifference = (date1, date2) => {
@@ -210,7 +210,6 @@ export default function Licencekey (){
 
   return (
     <div className='pageproduct'>
-
       <h1>Licence</h1>
       <div className='card-product-list'>
         <div className='filter-product-bar'>
