@@ -201,11 +201,11 @@ export default function Licencekey (){
   };
   const CustomNoRowsOverlay = () => {
     return <div
-    style={{display: 'flex' , flexDirection : "column" , alignItems : "center" , padding : "1rem"}}
+    style={{display: 'flex' , flexDirection : "column" , alignItems: "center" , justifyContent : 'center', padding : "1rem"}}
     >
       <img
       style={{width: 'fit-content' , height  :"fit-content"}}
-      src={Norows} style={{height : 120}} alt='' />
+      src={Norows} style={{height : 120 }} alt='' />
       <h4>No rows</h4>
     </div>
   }
