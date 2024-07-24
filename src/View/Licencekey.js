@@ -1,11 +1,10 @@
 import React, { useState, useEffect} from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 import { IoMdAdd } from "react-icons/io";
-import { FaLongArrowAltUp } from "react-icons/fa";
-import { FaLongArrowAltDown } from "react-icons/fa";
 import Norows from "../Images/norows.png"
 import { useNavigate } from 'react-router-dom';
 import '../App.css'
+import Cookies from 'js-cookie';
 
 const ImageCellRenderer = ({ value }) => (
   <div
@@ -46,19 +45,21 @@ export default function Licencekey (){
 
 
   useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if(authToken){
     fetch(`${apiUrl}/lk/getlks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        filter: "all"
+        usertk: authToken 
       })
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        const newrows = data.map((row, index) => {
+        const newrows = data && data.map((row, index) => {
           const { ["client"]: columnToRemoveValue1, ["type"]: columnToRemoveValue2, ...rest } = row;
           return {
             client: row.client,
@@ -189,7 +190,8 @@ export default function Licencekey (){
         setColumns(columnsData);
         setRows(newrows);
       })
-  },[])
+  }      
+},[])
   const handleRowClick = (params) => {
     const clickedRow = params.row;
     navigate(`/home/selectlicence`, { state: { rowData: clickedRow } });
@@ -203,7 +205,7 @@ export default function Licencekey (){
     >
       <img
       style={{width: 'fit-content' , height  :"fit-content"}}
-      src={Norows} alt='' />
+      src={Norows} style={{height : 120}} alt='' />
       <h4>No rows</h4>
     </div>
   }
@@ -233,3 +235,5 @@ export default function Licencekey (){
     </div>
   )
 }
+
+

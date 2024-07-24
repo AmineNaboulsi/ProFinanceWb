@@ -4,7 +4,10 @@ import LogoApp from "../Images/logoapp.png";
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie'; 
-
+import Lottie from 'react-lottie';
+import LoadingAnimation from '../lotties/loading.json';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
   
@@ -14,10 +17,19 @@ export default function Login() {
     password: "",
     tk: "",
   });
-  const [failed, setFailed] = useState(""); // Error message
-  const [loading, setLoading] = useState(false); // Loading state
+  const [failed, setFailed] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_API_URL;
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: LoadingAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
 
   const changeInputTextHandled = (e) => {
     setUser((prev) => ({
@@ -29,7 +41,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+    setFailed("");
     try {
       console.log(`${apiUrl}/user/auth`);
       const response = await fetch(`${apiUrl}/user/auth`, {
@@ -46,20 +58,32 @@ export default function Login() {
       const result = await response.json();
 
       if (!response.ok || !result.status) {
-        setFailed(result.message || 'Authentication failed');
+        toast.error(result.message || 'Authentication failed', {
+          position : 'bottom-right'
+        });
       } else {
         if(result.tk === undefined){
-          setFailed(result.message || 'Authentication failed');
+          toast.error(result.message || 'Authentication failed' , {
+            position : 'bottom-right'
+          });
+
         }else{
           Cookies.set('authToken', result.tk, { expires: 1 });
-          navigate('/home');
+          toast.success(result.message || 'Authentication failed' , {
+            position : 'bottom-right'
+          });
+          setTimeout(() => {
+            navigate('/home');
+          }, 1000);
+         
         }
       }
     } catch (error) {
-      console.log('Error:', error);
-      setFailed('An error occurred during authentication.');
+      toast.error('An error occurred during authentication.' , {
+        position : 'bottom-right'
+      });
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
@@ -97,9 +121,18 @@ export default function Login() {
               placeholder="Password"
             />
           </div>
+          {}
           {failed && <p style={{color: 'red'}}>{failed}</p>}
-          <button type="submit" disabled={loading}>Get Started</button> {/* Disable button while loading */}
-          {loading && <div className="progress-bar"></div>} {/* Show progress bar while loading */}
+          {loading && 
+          <Lottie 
+          options={defaultOptions}
+          height={50}
+          width={50}/>
+          }
+          
+          <button type="submit" disabled={loading}>Get Started</button>
+          <ToastContainer />
+
         </div>
         <div className="footer">
           <h1>78, Bd la résistance Res El Marzouki - Casablanca</h1>

@@ -8,6 +8,12 @@ import Licencekey from './View/Licencekey'
 import Logs from './View/Logs'
 import Selectlicence from './View/Selectlicence'
 import Addlicence from './View/Addlicence'
+import withValidationAuth from './View/ValidationAuth';
+
+const DashboardWithAuth = withValidationAuth(Dashboard);
+const AddlicenceWithAuth = withValidationAuth(Addlicence);
+const LicencekeyWithAuth = withValidationAuth(Licencekey);
+const SelectlicenceWithAuth = withValidationAuth(Selectlicence);
 
 
 function App() {
@@ -19,11 +25,11 @@ function App() {
       <Route path='*' element={<Notfound />} />
     </Route>
     <Route path='/home' element={<Layoutadmin />}>
-          <Route index element={<Dashboard />} />
-          <Route path='/home/licencekey' element={<Licencekey />} />
+          <Route index element={<DashboardWithAuth />} />
+          <Route path='/home/licencekey' element={<LicencekeyWithAuth />} />
           <Route path='/home/logs' element={<Logs />} />
-          <Route path='/home/selectlicence' element={<Selectlicence />} />
-          <Route path='/home/addlicence' element={<Addlicence />} />
+          <Route path='/home/selectlicence' element={<SelectlicenceWithAuth />} />
+          <Route path='/home/addlicence' element={<AddlicenceWithAuth />} />
           </Route>
    </Routes>
    </BrowserRouter>

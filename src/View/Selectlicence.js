@@ -4,6 +4,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { DiMsqlServer } from "react-icons/di";
 import { FaCopy } from "react-icons/fa";
 import { IoIosRocket } from "react-icons/io";
+import Cookies from 'js-cookie';
 
 export default function Selectlicence() {
   const location = useLocation();
@@ -42,13 +43,17 @@ export default function Selectlicence() {
   };
 
   useEffect(() => {
+    const authToken = Cookies.get('authToken');
+
     fetch(`${apiUrl}/lk/getbyId`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: rowData.id, // Ensure this matches the field name
+        id: rowData.id, 
+        usertk: authToken 
+        // Ensure this matches the field name
       }),
     })
       .then((response) => response.json())

@@ -1,11 +1,12 @@
 import React from 'react'
-import { Slidebar } from "./Slidebar";
+import ValidationAuth from './ValidationAuth'
 
-export default function Dashboard (){
+function Dashboard (){  
   return (
     <div>
        dashboard
     </div>
   )
 }
+export default  ValidationAuth(Dashboard);
 

@@ -1,14 +1,15 @@
 import React ,{ useState } from 'react';
 import { DiMsqlServer } from "react-icons/di";
 import Cookies from 'js-cookie';
-export default function Addlicence (){
+
+function Addlicence (){
   const [licenceData ,  setlicenceData] = useState({
     client:"" ,
     type:"monoposte" ,
     version : "demo" ,
     isMonopost : true,
     expireon: null,
-    etat:"libéllé",
+    etat:"libéllée",
     isvalide : true,
   });
 
@@ -151,3 +152,5 @@ export default function Addlicence (){
     </div>
   );
 }
+
+export default Addlicence;
