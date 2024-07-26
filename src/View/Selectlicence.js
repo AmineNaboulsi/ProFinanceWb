@@ -5,6 +5,9 @@ import { DiMsqlServer } from "react-icons/di";
 import { FaCopy } from "react-icons/fa";
 import { IoIosRocket } from "react-icons/io";
 import Cookies from 'js-cookie';
+import Lottie from 'react-lottie';
+import LoadingAnimation from '../lotties/loading.json';
+import { IoTime } from "react-icons/io5";
 
 export default function Selectlicence() {
   const location = useLocation();
@@ -42,34 +45,68 @@ export default function Selectlicence() {
     }));
   };
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: LoadingAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+  const fd = (date) => {
+    if (!(date instanceof Date)) {
+      date = new Date(date);
+    }
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${day}-${month}-${year} ${hours}:${minutes}`;
+  };
   useEffect(() => {
-    const authToken = Cookies.get('authToken');
+    setLoading(true);
 
-    fetch(`${apiUrl}/lk/getbyId`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: rowData.id, 
-        usertk: authToken 
-        // Ensure this matches the field name
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setLicence(data); // Directly set the data object
-        setLoading(false); // Set loading to false once data is fetched
+    const authToken = Cookies.get('authToken');
+    if(authToken){
+      fetch(`${apiUrl}/lk/getbyId`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: rowData.id, 
+          usertk: authToken 
+        }),
       })
-      .catch((error) => {
-        console.error('Error fetching licence data:', error);
-        setError(error); // Set error state if an error occurs
-        setLoading(false); // Set loading to false even if there is an error
-      }); 
+        .then((response) => response.json())
+        .then((data) => {
+          setLicence(data);
+          const fdateFromAPI = new Date(licence.date_activation);
+
+          setLicence(prev =>({
+            ...prev,
+            date_activation : fdateFromAPI
+          }));
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error fetching licence data:', error);
+          setError(error); // Set error state if an error occurs
+          setLoading(false); // Set loading to false even if there is an error
+        }); 
+    }else{
+      setLoading(true); 
+
+    }
+   
   }, [rowData]);
 
   return (
+
     <div style={{padding: 30 , backgroundColor : "#F1F1F1" , width : "100%"}}>
+      {!loading ? 
+      <>
       <div className='backspace' onClick={() => navigate(-1)}>
         <FaArrowLeft style={{cursor : 'pointer'}}/>
         <h2 style={{cursor : 'pointer'}}>{licence && licence.client}</h2>
@@ -149,12 +186,40 @@ export default function Selectlicence() {
               </div>
             </div>
             <div className='right-side-p2'>
-              <label className='appnotdeclared' >Cette clé de licence n'est reconnue sur aucune appareil</label>
+              {licence && licence.userinfo && licence.date_activation ? (
+                <>
+                <div className='deviceInfo'>
+                  <div className='machineInfo'>
+                    <label >Machine : {licence.userinfo}</label>
+                    <div className='connecteddevice'></div>
+                  </div>
+                  <div className='machineInfo'>
+                    <label >Date d'activation : {fd(licence.date_activation)}</label>
+                    <IoTime/>
+                  </div>
+
+                </div>
+                  
+                </>
+                ):(
+                <>
+                  <label className='appnotdeclared' >Cette clé de licence n'est reconnue sur aucune appareil</label>
+                </>
+              )}
             </div>
             <button style={{display : 'none'}} className='btndave'
             >Enregistrer</button>
           </div>
       </div>
+      </> : (<>
+        <Lottie 
+          options={defaultOptions}
+          height={50}
+          width={50}/>
+          
+      </>)
+      }
+      
     </div>
   );
 }

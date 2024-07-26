@@ -265,6 +265,7 @@ product page
 .fivemachines{
   color : #767272 ;
   text-align: center;
+  font-size: 12px;
 }
 .upgradebtn{
   border-radius: 10px;
@@ -314,6 +315,26 @@ product page
   justify-content: center;
   align-items: center;
   height: 215px;
+}
+.deviceInfo{
+  color : #767272 ;
+  display: flex;
+  flex-direction: column;
+  height: 215px;
+  gap: 10px;
+}
+.machineInfo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.connecteddevice{
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #68CC45;
+  margin-right:  2.5px;
 }
 
 /* add licence */

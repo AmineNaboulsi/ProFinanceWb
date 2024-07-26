@@ -135,6 +135,18 @@ export default function Licencekey (){
               }
             }
           }
+          if(attribute === "etat"){
+            return {
+              field: attribute,
+              headerName: "Date d'expiration",
+              width: 185,
+              renderCell: (params) => {
+                if(params.value === "libéllé"){return <p style={{color : 'black'}}>{params.value}</p>}
+                else if(params.value === "En utilisation"){return <p style={{color : 'green'}}>{params.value}</p>}
+                else if(params.value === "Annuler"){return <p style={{color : 'red'}}>{params.value}</p>}
+
+              }}
+          }
           /*
           if (attribute === "quantitystock") {
             return {

@@ -1,7 +1,9 @@
 import React ,{ useState } from 'react';
 import { DiMsqlServer } from "react-icons/di";
 import Cookies from 'js-cookie';
-
+import { ToastContainer, toast } from 'react-toastify';
+import Lottie from 'react-lottie';
+import LoadingAnimation from '../lotties/loading.json';
 function Addlicence (){
   const [licenceData ,  setlicenceData] = useState({
     client:"" ,
@@ -12,9 +14,16 @@ function Addlicence (){
     etat:"libéllée",
     isvalide : true,
   });
-
+  const [loading , setloading] = useState(false);
   const ApiUrl = process.env.REACT_APP_API_URL;
-
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: LoadingAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
   const handledSaveLicence = () =>{
     if(licenceData && licenceData.client === ""){
       alert("Nom de client obligation");
@@ -31,6 +40,7 @@ function Addlicence (){
       }else{
         DateExpor = licenceData.expireon;
       }
+      setloading(true);
       const authToken = Cookies.get('authToken');
       fetch(`${ApiUrl}/lk/newkey` ,
         {  method:'POST',
@@ -49,13 +59,23 @@ function Addlicence (){
         
       ).then(res=>res.json()).then(data=>
       {
-        const dataString = JSON.stringify(data, null, 2);
-        alert(dataString);
+        if(data.status){
+          toast.success(data.status, {
+            position : 'bottom-right'
+          });
+        }else{
+          toast.error(data.error|| 'failed', {
+            position : 'bottom-right'
+          });
+        }
+        setloading(false);
       }
-      );
+      ).catch((error)=>{
+        setloading(true);
+      })
+      };
     }
-    
-  }
+
     const handleMonopostClick = (isMonopost) => {
       const tp = isMonopost?'monopost':'reseaux';
       setlicenceData((prev) => ({
@@ -147,6 +167,14 @@ function Addlicence (){
 
             <button className='btndave'
             onClick={handledSaveLicence}>Enregistrer</button>
+            {loading ? (<><Lottie 
+          options={defaultOptions}
+          height={50}
+          width={50}/></>):(<></>)}
+            
+        
+             <ToastContainer />
+
           </div>
       </div>
     </div>
