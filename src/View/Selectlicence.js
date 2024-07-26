@@ -8,15 +8,16 @@ import Cookies from 'js-cookie';
 import Lottie from 'react-lottie';
 import LoadingAnimation from '../lotties/loading.json';
 import { IoTime } from "react-icons/io5";
+import { FaWindows } from "react-icons/fa";
 
 export default function Selectlicence() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { rowData } = location.state || {}; // Provide a default empty object
+  const { rowData } = location.state || {};
 
-  const [licence, setLicence] = useState(null); // Initialize state as null or an empty object if preferred
-  const [loading, setLoading] = useState(true); // Add a loading state
-  const [error, setError] = useState(null); // Add an error state
+  const [licence, setLicence] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -153,7 +154,6 @@ export default function Selectlicence() {
                 </div>
                 <label className='fivemachines'>vous avez 5 machines au maximum pour cette version d'application</label>
                 </>
-                
               ) : (<></>)}
              </div>
             <div className='left-side-p3'>
@@ -190,14 +190,19 @@ export default function Selectlicence() {
                 <>
                 <div className='deviceInfo'>
                   <div className='machineInfo'>
-                    <label >Machine : {licence.userinfo}</label>
+                    <label >Os : {licence.os}</label>
+                    <FaWindows />
+
+                  </div>
+                  <div className='machineInfo'>
+                    <label >Machine : {licence.deviceinfo}</label>
                     <div className='connecteddevice'></div>
                   </div>
                   <div className='machineInfo'>
                     <label >Date d'activation : {fd(licence.date_activation)}</label>
                     <IoTime/>
                   </div>
-
+                  <div>{licence && licence.isvm ? (<>machine virtuelle</>):(<>machine physique</>) }</div>
                 </div>
                   
                 </>

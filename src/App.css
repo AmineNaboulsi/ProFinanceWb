@@ -54,7 +54,7 @@ body{
 /*
 product page 
 */
-.pageproduct{
+.pageframe{
   padding: .5rem 3rem;
   width: 100%;
   background-color: #F1F1F1;
@@ -356,4 +356,74 @@ product page
 .dateExx{
   text-align: center;
   font-weight: 600;
+}
+
+
+/* Dashborad */
+
+.timelable{
+  margin-top: 60px;
+  font-size: 50px;
+
+}
+.datelable{
+  margin-top: 10px;
+}
+.dateInfopanel{
+  display: flex;
+  flex-direction: column;
+}
+.imgdashboradBG {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: 400px;
+}
+.cadrSTlicence{
+  background-color: #F47038;
+  height: 90px;
+  width: 90px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-items: center;
+  margin-top: 30px;
+}
+.cadrST{
+  background-color: #1868CF;
+  height: 90px;
+  width: 90px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-items: center;
+  margin-top: 30px;
+}
+.panelcard{
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-items: center;
+  gap: 5px;
+}
+.panelcard{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 5px;
+}
+.ListCard{
+  display: flex;
+  flex-direction: row;
+  gap: 70px;
+  margin-top: 35px;
+}
+.hi{
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+
 }

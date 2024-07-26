@@ -111,12 +111,14 @@ export default function Login() {
               type="text"
               onChange={changeInputTextHandled}
               name="user"
+              style={{  color:'black' }}
               placeholder="User Name"
             />
             <input
               required
               type="password"
               name="password"
+              style={{  color:'black' }}
               onChange={changeInputTextHandled}
               placeholder="Password"
             />

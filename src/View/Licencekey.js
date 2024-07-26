@@ -223,7 +223,7 @@ export default function Licencekey (){
   }
 
   return (
-    <div className='pageproduct'>
+    <div className='pageframe'>
       <h1>Licence</h1>
       <div className='card-product-list'>
         <div className='filter-product-bar'>

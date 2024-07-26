@@ -9,11 +9,14 @@ import Logs from './View/Logs'
 import Selectlicence from './View/Selectlicence'
 import Addlicence from './View/Addlicence'
 import withValidationAuth from './View/ValidationAuth';
+import Devices from './View/Devices';
+
 
 const DashboardWithAuth = withValidationAuth(Dashboard);
 const AddlicenceWithAuth = withValidationAuth(Addlicence);
 const LicencekeyWithAuth = withValidationAuth(Licencekey);
 const SelectlicenceWithAuth = withValidationAuth(Selectlicence);
+const DevicesWithAuth = withValidationAuth(Devices);
 
 
 function App() {
@@ -30,6 +33,7 @@ function App() {
           <Route path='/home/logs' element={<Logs />} />
           <Route path='/home/selectlicence' element={<SelectlicenceWithAuth />} />
           <Route path='/home/addlicence' element={<AddlicenceWithAuth />} />
+          <Route path='/home/devices' element={<DevicesWithAuth />} />
           </Route>
    </Routes>
    </BrowserRouter>
