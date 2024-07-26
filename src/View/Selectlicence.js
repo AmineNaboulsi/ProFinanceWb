@@ -121,11 +121,11 @@ export default function Selectlicence() {
               <div style={{display : 'flex',flexDirection:'column' , gap : 8}}>
                 <label>Type</label>
                 <div className='typespace'>
-                  <div className={licence && licence.type==='monoposte' ? 'cardtypeA': 'cardtypeB'} style={{display : 'flex',flexDirection:'row'}}>
+                  <div className={licence && licence.type==='monopost' ? 'cardtypeA': 'cardtypeB'} style={{display : 'flex',flexDirection:'row'}}>
                     <DiMsqlServer />
                     <label>Monoposte</label>
                   </div>
-                  <div className={licence && licence.type==='monoposte' ? 'cardtypeB': 'cardtypeA'}>
+                  <div className={licence && licence.type==='monopost' ? 'cardtypeB': 'cardtypeA'}>
                     <DiMsqlServer />
                     <label>Reseaux</label>
                   </div>
@@ -140,7 +140,7 @@ export default function Selectlicence() {
                   <FaCopy onClick={handleCopyClickS} style={{cursor:  "pointer"}}/>
                 </div>
               </div>
-              {licence && licence.type !=='monoposte' 
+              {licence && licence.type !=='monopost' 
               
               ? (
                 <>
