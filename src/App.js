@@ -17,6 +17,7 @@ const AddlicenceWithAuth = withValidationAuth(Addlicence);
 const LicencekeyWithAuth = withValidationAuth(Licencekey);
 const SelectlicenceWithAuth = withValidationAuth(Selectlicence);
 const DevicesWithAuth = withValidationAuth(Devices);
+const LogsWithAuth = withValidationAuth(Logs);
 
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
     <Route path='/home' element={<Layoutadmin />}>
           <Route index element={<DashboardWithAuth />} />
           <Route path='/home/licencekey' element={<LicencekeyWithAuth />} />
-          <Route path='/home/logs' element={<Logs />} />
+          <Route path='/home/logs' element={<LogsWithAuth />} />
           <Route path='/home/selectlicence' element={<SelectlicenceWithAuth />} />
           <Route path='/home/addlicence' element={<AddlicenceWithAuth />} />
           <Route path='/home/devices' element={<DevicesWithAuth />} />

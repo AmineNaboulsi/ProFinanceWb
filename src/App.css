@@ -427,3 +427,44 @@ product page
   gap: 10px;
 
 }
+/* Devices */
+
+.deviceItem{
+  padding: 15px;
+  border: 1px solid #d8d8d8;
+  background-color: #fff;
+  border-radius: 12px;
+  display : flex;
+  flex-direction: column;
+  align-content: center;
+  gap : 15px ;
+  width: 320px;
+}
+.etatTypeOn{
+ margin-top : 12px ;
+ text-align: center ;
+ background-color: rgba(67, 236, 67, 0.523);
+ border-radius: 8px;
+ padding: 5px 0 5px 0;
+ font-size: 13px;
+}
+.etatTypeOff{
+  margin-top : 12px ;
+  text-align: center ;
+  background-color: rgba(233, 97, 97, 0.523);
+  border-radius: 8px;
+  padding: 5px 0 5px 0;
+  font-size: 13px;
+}
+.paneldevices{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.stats{
+  position: absolute;
+  bottom: 0;
+  right:  0;
+  left:  250px;
+  margin-bottom: 15px;
+}
