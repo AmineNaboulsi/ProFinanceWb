@@ -7,7 +7,7 @@ import LoadingAnimation from '../lotties/loading.json';
 function Addlicence (){
   const [licenceData ,  setlicenceData] = useState({
     client:"" ,
-    type:"monoposte" ,
+    type:"monopost" ,
     version : "demo" ,
     isMonopost : true,
     expireon: null,
