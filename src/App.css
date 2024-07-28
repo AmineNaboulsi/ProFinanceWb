@@ -479,6 +479,7 @@ product page
   display: grid;
   grid-template-columns: 1fr;
   gap: 15px;
+
 }
 
 .clientNamePanel{
@@ -519,10 +520,6 @@ product page
   gap: 10px;
 }
 .stats{
-  position: absolute;
-  bottom: 0;
-  right:  0;
-  left:  250px;
   margin-bottom: 15px;
   backdrop-filter: blur(8px);
 }
