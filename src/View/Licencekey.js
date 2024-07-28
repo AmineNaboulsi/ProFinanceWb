@@ -72,135 +72,92 @@ export default function Licencekey (){
             
           };
         });
-
-        const attributes = Object.keys(newrows[0]);
-        // Create columnsData dynamically based on attributes
-        const columnsData = attributes.map((attribute) => {
-          
-          if (attribute === "isMonopost") {
-            return {
-              field: attribute,
-              headerName: attribute,
-              width: 150,
-              renderCell: (params) => {
-                if (params.value === true) {
-                  //return <div className='statusactive'>Oui</div>
-                  return <>Monoposte</>
-
-                } else {
-                  //return <div className="statusdraft">Non</div>;
-                  return <>Reseaux</>
-                }
-              }
-            }
-          }
-          if (attribute === "expireon") {
-            return {
-              field: attribute,
-              headerName: "Date d'expiration",
-              width: 185,
-              renderCell: (params) => {
-              
-                const version = params.row.version; 
-
-                
-                if(version === "complet"){
-                  return  <p style={{color : 'black' , fontWeight : 'bold' , marginLeft : 15}}>
-                    A vie</p>
-                }else{
-                  const today = new Date();
-                  const compareDate = new Date(params.value);
+        if(newrows[0] !== undefined){
+          const attributes = Object.keys(newrows[0]);
+          // Create columnsData dynamically based on attributes
+          const columnsData = attributes.map((attribute) => {
             
-                  // Calculate days difference
-                  const daysDifference = calculateDaysDifference(compareDate, today);
-            
-                  // Format the date
-                  const formattedDate = formatDate(compareDate);
-            
-                  // Display days left or 'end'
-                  const displayText = `rest ${daysDifference} jour `;
-          
+            if (attribute === "isMonopost") {
+              return {
+                field: attribute,
+                headerName: attribute,
+                width: 150,
+                renderCell: (params) => {
+                  if (params.value === true) {
+                    //return <div className='statusactive'>Oui</div>
+                    return <>Monoposte</>
   
-  
-                  if(daysDifference >= 0){
-                    return  <>
-                    {formattedDate} <p style={{color : 'green' , marginLeft : 15}}>({displayText})</p>
-                    </>
-                  }else{
-                    return  <> 
-                    {formattedDate} <p style={{color : 'red' , marginLeft : 15}}>période finie</p>
-                    </>
+                  } else {
+                    //return <div className="statusdraft">Non</div>;
+                    return <>Reseaux</>
                   }
                 }
               }
             }
-          }
-          if(attribute === "etat"){
-            return {
-              field: attribute,
-              headerName: "Date d'expiration",
-              width: 185,
-              renderCell: (params) => {
-                if(params.value === "libéllé"){return <p style={{color : 'black'}}>{params.value}</p>}
-                else if(params.value === "En utilisation"){return <p style={{color : 'green'}}>{params.value}</p>}
-                else if(params.value === "Annuler"){return <p style={{color : 'red'}}>{params.value}</p>}
-
-              }}
-          }
-          /*
-          if (attribute === "quantitystock") {
-            return {
-              field: attribute,
-              headerName: attribute,
-              width: 150,
-              renderCell: (params) => {
-                if (params.value === 0) {
-                  return <div style={{ display: "flex", alignItems: "center", gap: "4px", color: "red" }}>
-                    <FaLongArrowAltDown />
-                    <span>{params.value}</span>
-                  </div>
-                } else {
-                  return <div style={{ display: "flex", alignItems: "center", gap: "4px", color: "green" }}>
-                    <FaLongArrowAltUp />
-                    <span>{params.value}</span>
-                  </div>;
+            if (attribute === "expireon") {
+              return {
+                field: attribute,
+                headerName: "Date d'expiration",
+                width: 185,
+                renderCell: (params) => {
+                
+                  const version = params.row.version; 
+  
+                  
+                  if(version === "complet"){
+                    return  <p style={{color : 'black' , fontWeight : 'bold' , marginLeft : 15}}>
+                      A vie</p>
+                  }else{
+                    const today = new Date();
+                    const compareDate = new Date(params.value);
+              
+                    // Calculate days difference
+                    const daysDifference = calculateDaysDifference(compareDate, today);
+              
+                    // Format the date
+                    const formattedDate = formatDate(compareDate);
+              
+                    // Display days left or 'end'
+                    const displayText = `rest ${daysDifference} jour `;
+            
+    
+    
+                    if(daysDifference >= 0){
+                      return  <>
+                      {formattedDate} <p style={{color : 'green' , marginLeft : 15}}>({displayText})</p>
+                      </>
+                    }else{
+                      return  <> 
+                      {formattedDate} <p style={{color : 'red' , marginLeft : 15}}>période finie</p>
+                      </>
+                    }
+                  }
                 }
               }
             }
-          }
-          if (attribute === "status") {
+            if(attribute === "etat"){
+              return {
+                field: attribute,
+                headerName: "Date d'expiration",
+                width: 185,
+                renderCell: (params) => {
+                  if(params.value === "libéllé"){return <p style={{color : 'black'}}>{params.value}</p>}
+                  else if(params.value === "En utilisation"){return <p style={{color : 'green'}}>{params.value}</p>}
+                  else if(params.value === "Annuler"){return <p style={{color : 'red'}}>{params.value}</p>}
+  
+                }}
+            }
             return {
-              field: "status",
+              field: attribute,
               headerName: attribute,
-              width: 150,
-              renderCell: (params) => {
-                if (params.value === "active") {
-                  return <div className='statusactive'>Active</div>
-                } else {
-                  return <div className="statusdraft">Draft</div>;
-                }
-              }
+              width: 180,
             };
-          }
-          if (attribute === "price") {
-            return {
-              field: "price",
-              headerName: "Price",
-              width: 150,
-              renderCell: (params) => {
-                return <>{params.value}</>
-              }
-            };
-          }*/
-          return {
-            field: attribute,
-            headerName: attribute,
-            width: 180,
-          };
-        });
-
-        setColumns(columnsData);
-        setRows(newrows);
+          });
+  
+          setColumns(columnsData);
+          setRows(newrows && newrows);
+        }
+       
       })
   }      
 },[])

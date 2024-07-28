@@ -16,6 +16,8 @@ export default function Selectlicence() {
   const { rowData } = location.state || {};
 
   const [licence, setLicence] = useState(null);
+  const [licenceDevices, setlicenceDevices] = useState(null);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -94,8 +96,28 @@ export default function Selectlicence() {
         .catch((error) => {
           console.error('Error fetching licence data:', error);
           setError(error); // Set error state if an error occurs
-          setLoading(false); // Set loading to false even if there is an error
+          setLoading(false);
         }); 
+     fetch(`${apiUrl}/device/getdevicesbyc`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${authToken}`
+          },
+          body: JSON.stringify({
+            client: rowData.id, 
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setlicenceDevices(data);
+            console.log(data);
+          })
+          .catch((error) => {
+            console.error('Error fetching licence data:', error);
+            setError(error); // Set error state if an error occurs
+            setLoading(false);
+          }); 
     }else{
       setLoading(true); 
 
@@ -186,31 +208,22 @@ export default function Selectlicence() {
               </div>
             </div>
             <div className='right-side-p2'>
-              {licence && licence.userinfo && licence.date_activation ? (
-                <>
-                <div className='deviceInfo'>
-                  <div className='machineInfo'>
-                    <label >Os : {licence.os}</label>
-                    <FaWindows />
-
-                  </div>
-                  <div className='machineInfo'>
-                    <label >Machine : {licence.deviceinfo}</label>
-                    <div className='connecteddevice'></div>
-                  </div>
-                  <div className='machineInfo'>
-                    <label >Date d'activation : {fd(licence.date_activation)}</label>
-                    <IoTime/>
-                  </div>
-                  <div>{licence && licence.isvm ? (<>machine virtuelle</>):(<>machine physique</>) }</div>
-                </div>
-                  
-                </>
-                ):(
-                <>
-                  <label className='appnotdeclared' >Cette clé de licence n'est reconnue sur aucune appareil</label>
-                </>
-              )}
+              {licenceDevices && licenceDevices.map((device , index)=>(
+                 <>
+                 <div className={device.IsServer?'deviceInfoS':'deviceInfoM'}>
+                   <div className='machineInfo'>
+                     <label >Machine {index}: {device.name}</label>
+                     <FaWindows />
+                   </div>
+                 </div>
+                 </>
+              ))
+              }
+              {licenceDevices && licenceDevices.length === 0 && (<div className='deviceInfoNone'>
+                      Cette clé de licence n'est reconnue sur aucun appareil.
+                  </div>)
+              }
+              
             </div>
             <button style={{display : 'none'}} className='btndave'
             >Enregistrer</button>
@@ -221,7 +234,6 @@ export default function Selectlicence() {
           options={defaultOptions}
           height={50}
           width={50}/>
-          
       </>)
       }
       
