@@ -5,6 +5,8 @@ import Norows from "../Images/norows.png"
 import { useNavigate } from 'react-router-dom';
 import '../App.css'
 import Cookies from 'js-cookie';
+import LoadingAnimation from '../lotties/loading.json';
+import Lottie from 'react-lottie';
 
 const ImageCellRenderer = ({ value }) => (
   <div
@@ -18,15 +20,14 @@ const ImageCellRenderer = ({ value }) => (
 
   </div>
 );
-
-
 export default function Licencekey (){
   const navigate = useNavigate();
 
+  const [loading , setloading] = useState(false);
   const formatDate = (date) => {
     const d = new Date(date);
     let day = d.getDate();
-    let month = d.getMonth() + 1; // Months are zero based
+    let month = d.getMonth() + 1;
     const year = d.getFullYear();
   
     if (day < 10) day = '0' + day;
@@ -42,11 +43,19 @@ export default function Licencekey (){
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
   const apiUrl = process.env.REACT_APP_API_URL;
-
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: LoadingAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
 
   useEffect(() => {
     const authToken = Cookies.get('authToken');
     if(authToken){
+      setloading(true);
     fetch(`${apiUrl}/lk/getlks`, {
       method: "POST",
       headers: {
@@ -58,7 +67,6 @@ export default function Licencekey (){
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const newrows = data && data.map((row, index) => {
           const { ["client"]: columnToRemoveValue1, ["type"]: columnToRemoveValue2, ...rest } = row;
           return {
@@ -157,7 +165,7 @@ export default function Licencekey (){
           setColumns(columnsData);
           setRows(newrows && newrows);
         }
-       
+        setloading(false);
       })
   }      
 },[])
@@ -172,10 +180,13 @@ export default function Licencekey (){
     return <div
     style={{display: 'flex' , flexDirection : "column" , alignItems: "center" , justifyContent : 'center', padding : "1rem"}}
     >
-      <img
-      style={{width: 'fit-content' , height  :"fit-content"}}
-      src={Norows} style={{height : 120 }} alt='' />
-      <h4>No rows</h4>
+      {loading ? (<><Lottie 
+          options={defaultOptions}
+          height={50}
+          width={50}/></>) : (<>{rows && rows.length===0 && (<>
+          <img style={{justifySelf: 'center' , alignSelf  :'center' , height : 100}}
+      src={Norows} alt='' />
+      <h4>No Rows</h4></>)}</>)}
     </div>
   }
 

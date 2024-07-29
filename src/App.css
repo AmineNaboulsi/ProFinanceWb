@@ -372,7 +372,7 @@ product page
   width: 10px;
   height: 10px;
   border-radius: 5px;
-  background-color: #ff8861;
+  background-color: #fb4d4d;
   margin-right:  2.5px;
 }
 .isNVMddevice{
@@ -475,11 +475,19 @@ product page
 }
 /* Devices */
 
+.nodevices{
+  justify-self: center;
+  align-self: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center;
+  gap: 10px;
+}
 .ClientDevicesPanel{
   display: grid;
   grid-template-columns: 1fr;
   gap: 15px;
-
 }
 
 .clientNamePanel{
@@ -497,6 +505,33 @@ product page
   align-content: center;
   gap : 15px ;
   width: 320px;
+}
+.deviceItemBanned{
+  padding: 15px;
+  border: 1px solid #d8d8d8;
+  background-color: #fff;
+  color: #5C5858;
+  border-radius: 12px;
+  display : flex;
+  flex-direction: column;
+  align-content: center;
+  gap : 15px ;
+  width: 320px;
+  position: relative;
+  opacity: .7;
+}
+.deviceItemBanned::after{
+  content: 'Banned';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  color: red;
+  font-size: 4.5rem;
+  font-weight: 700;
+  transform: rotate(-20deg);
+  margin-left: 20px;
+  margin-top: 22px;
+  opacity: .4;
 }
 .etatTypeOn{
  margin-top : 12px ;
@@ -518,8 +553,44 @@ product page
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 10px;
 }
 .stats{
   margin-bottom: 15px;
   backdrop-filter: blur(8px);
+}
+.ConfigureDevice{
+  position : absolute;
+  inset: 0;
+}
+.configBG{
+  backdrop-filter: blur(7px);
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  z-index: 1;
+}
+
+.ConfigureDevicePanel{
+  width: 280px;
+  height: 200px;
+  position : absolute;
+  align-self: center;
+  justify-self: center;
+  inset: 0;
+  z-index: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-items: center;
+}
+
+.pageframeD{
+  padding: .5rem 5rem 2rem 2.5rem;
+  background-color: #F1F1F1;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
 }
