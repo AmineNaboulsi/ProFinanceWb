@@ -7,7 +7,7 @@ import { IoIosRocket } from "react-icons/io";
 import Cookies from 'js-cookie';
 import Lottie from 'react-lottie';
 import LoadingAnimation from '../lotties/loading.json';
-import LoadingAdvance from '../lotties/loading2.json';
+import LoadingVIP from '../lotties/versioncomplet.json';
 import { IoTime } from "react-icons/io5";
 import { FaWindows } from "react-icons/fa";
 import 'react-toastify/dist/ReactToastify.css';
@@ -72,11 +72,11 @@ export default function Selectlicence() {
       preserveAspectRatio: "xMidYMid slice"
     }
   };
-  const defaultOptionsA = {
+  const defaultOptionsVIP = {
     loop: true,
     autoplay: true,
     color : '#F47038',
-    animationData: LoadingAdvance,
+    animationData: LoadingVIP,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice"
     }
@@ -242,7 +242,15 @@ export default function Selectlicence() {
                 <label style={{  cursor: "pointer" , fontSize : 12}}>Upgrade</label>
               </div>
             </div>
-             </>): <></>}
+             </>): <>
+             <div className='left-side-p3VIP'>
+                <Lottie 
+              options={defaultOptionsVIP}
+              height={50}
+              width={50}/>
+              <label style={{fontSize : 10 , color : '#121212'}}>Complet plan</label>
+            </div>
+              </>}
             
           </div>
           <div className='right-side-part'>

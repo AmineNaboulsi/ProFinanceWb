@@ -251,6 +251,7 @@ product page
   grid-template-columns: 100px 1fr;
   align-items: center;
 }
+
 .p2-machine_txt{
   border : 1px solid #d6d6d6;
   border-radius: 11px;
@@ -286,6 +287,16 @@ product page
   justify-content: center;
   align-content: center;
   gap: 15px;
+}
+.left-side-p3VIP{
+  display: grid;
+  border-radius: 11px;
+  border: 1px solid #b2b0b0;
+  justify-content: center;
+  align-content: center;
+  gap: 5px;
+  padding-bottom: 10px; 
+   background-color: rgb(255, 252, 234);
 }
 .cadreversionoff{
   border: 1px solid #5C5858;
