@@ -12,6 +12,7 @@ import { IoTime } from "react-icons/io5";
 import { FaWindows } from "react-icons/fa";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
+import { FaCrown } from "react-icons/fa";
 
 export default function Selectlicence() {
   const location = useLocation();
@@ -93,6 +94,7 @@ export default function Selectlicence() {
     return `${day}-${month}-${year} ${hours}:${minutes}`;
   };
   const HandledUpdateCHnagesClick =()=>{
+    
     setLoadingA(true);
     const authToken = Cookies.get('authToken');
 
@@ -106,17 +108,22 @@ export default function Selectlicence() {
       body: JSON.stringify({
         id: rowData.id, 
         date_expiredOn : licence.expireon ,
-        version :licence.version
+        version :licence.version,
+        v: false
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         if(data.status){
-          toast.success(' Updated ', {
-            position : 'bottom-right'
+          toast.success('Updated', {
+            position: 'bottom-right'
           });
           setchangeData(false);
           setLoadingA(false);
+        }else{
+          toast.error('Failed ', {
+            position : 'bottom-right'
+          });
         }
         
       })
@@ -175,11 +182,73 @@ export default function Selectlicence() {
             setLoading(false);
           }); 
     }else{
-      setLoading(true); 
-
+      setLoading(true);
     }
    
   }, [rowData]);
+
+  const [pin, setPin] = useState('');
+  const [pinpanel, setpinpanel] = useState(false);
+
+  const handlePinChange = (e) => {
+    setPin(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    console.log(""+pin.toString()+" | "+process.env.REACT_APP_PIN)
+    if (pin.toString() === process.env.REACT_APP_PIN) {
+      const authToken = Cookies.get('authToken');
+
+    fetch(`${apiUrl}/lk/uplk`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify({
+        id: rowData.id, 
+        date_expiredOn : licence.expireon ,
+        version :"complet",
+        v: true
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if(data.status){
+          setpinpanel(false);
+          toast.success('Upgrade Version ', {
+            position : 'bottom-right',
+            icon: <FaCrown />,
+            Theme : '#E9B442'
+          });
+          setchangeData(false);
+          setLoadingA(false);
+          setLicence((prev)=>({
+            ...prev ,
+            version: 'complet'
+          }))
+        }else{
+          toast.error('Failed ', {
+            position : 'bottom-right'
+          });
+        }
+      })
+      .catch((error) => {
+        setError(error); 
+        setLoading(false);
+      }); 
+    } else {
+      setpinpanel(false);
+      alert("Pin not valide");
+      
+    }
+  };
+  const UpgradeHandled = () => {
+    setpinpanel(true);
+  };
+  const onClose = () => {
+    setpinpanel(false);
+  };
 
   return (
 
@@ -237,7 +306,7 @@ export default function Selectlicence() {
              {licence && licence.version==='demo' ? (<>
               <div className='left-side-p3'>
             <label>Upgrade plan</label>
-              <div className='upgradebtn'>
+              <div className='upgradebtn' onClick={UpgradeHandled}>
                 <IoIosRocket />
                 <label style={{  cursor: "pointer" , fontSize : 12}}>Upgrade</label>
               </div>
@@ -307,7 +376,53 @@ export default function Selectlicence() {
           width={50}/>
       </>)
       }
+      {pinpanel && (<div style={styles.overlay}>
+      <div style={styles.alertBox}>
+        <h2>Enter Code PIN</h2>
+        <input
+          type="text"
+          value={pin}
+          onChange={handlePinChange}
+          style={styles.input}
+        />
+        <div style={styles.buttons}>
+          <button onClick={handleSubmit} style={styles.button}>Submit</button>
+          <button onClick={onClose} style={styles.button}>Cancel</button>
+        </div>
+      </div>
+    </div>)}
       
     </div>
   );
 }
+
+const styles = {
+  overlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  alertBox: {
+    backgroundColor: 'white',
+    padding: '20px',
+    borderRadius: '5px',
+    textAlign: 'center',
+  },
+  input: {
+    margin: '10px 0',
+    padding: '5px',
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  button: {
+    margin: '5px',
+  },
+};
