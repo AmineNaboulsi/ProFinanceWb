@@ -165,7 +165,7 @@ function Addlicence (){
               </div>
             </div>
 
-            <button className='btndaveV'
+            <button className='btndave'
             onClick={handledSaveLicence}>Enregistrer</button>
             {loading ? (<><Lottie 
           options={defaultOptions}

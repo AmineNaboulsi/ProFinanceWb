@@ -331,6 +331,13 @@ product page
   display: grid;
   grid-template-columns: 1fr;
 }
+.btndave{
+  background-color : #51504e ; 
+  border-radius :5px ;
+  padding: 10px 0 10px 0 ;
+  display: grid;
+  grid-template-columns: 1fr;
+}
 .LottieL{
   display: none;
 }
