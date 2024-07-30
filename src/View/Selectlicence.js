@@ -7,8 +7,11 @@ import { IoIosRocket } from "react-icons/io";
 import Cookies from 'js-cookie';
 import Lottie from 'react-lottie';
 import LoadingAnimation from '../lotties/loading.json';
+import LoadingAdvance from '../lotties/loading2.json';
 import { IoTime } from "react-icons/io5";
 import { FaWindows } from "react-icons/fa";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Selectlicence() {
   const location = useLocation();
@@ -19,7 +22,10 @@ export default function Selectlicence() {
   const [licenceDevices, setlicenceDevices] = useState(null);
 
   const [loading, setLoading] = useState(true);
+  const [LoadingA, setLoadingA] = useState(true);
+
   const [error, setError] = useState(null);
+  const [changeData, setchangeData] = useState(false);
 
   const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -42,16 +48,35 @@ export default function Selectlicence() {
   
   const handleDateChange = (e) => {
     const { value } = e.target;
-    setLicence((prevData) => ({
-      ...prevData,
-      expireon: new Date(value).getTime(),
-    }));
+    const Todaydate = new Date();
+    const DatePicked = new Date(value);
+    if(Todaydate >= DatePicked){
+      toast.error('Date provided for expired licence less then 1 day minimum', {
+        position : 'bottom-right'
+      });
+    }else{
+      setLicence((prevData) => ({
+        ...prevData,
+        expireon: new Date(value).getTime(),
+      }));
+      setchangeData(true);
+    }
+    
   };
 
   const defaultOptions = {
     loop: true,
     autoplay: true,
     animationData: LoadingAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+  const defaultOptionsA = {
+    loop: true,
+    autoplay: true,
+    color : '#F47038',
+    animationData: LoadingAdvance,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice"
     }
@@ -67,9 +92,42 @@ export default function Selectlicence() {
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${day}-${month}-${year} ${hours}:${minutes}`;
   };
+  const HandledUpdateCHnagesClick =()=>{
+    setLoadingA(true);
+    const authToken = Cookies.get('authToken');
+
+    fetch(`${apiUrl}/lk/uplk`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${authToken}`
+
+      },
+      body: JSON.stringify({
+        id: rowData.id, 
+        date_expiredOn : licence.expireon ,
+        version :licence.version
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if(data.status){
+          toast.warning('Updated', {
+            position : 'bottom-right'
+          });
+          setchangeData(false);
+          setLoadingA(false);
+        }
+        
+      })
+      .catch((error) => {
+        setError(error); // Set error state if an error occurs
+        setLoading(false);
+      }); 
+  }
   useEffect(() => {
     setLoading(true);
-
+    setchangeData(false);
     const authToken = Cookies.get('authToken');
     if(authToken){
       fetch(`${apiUrl}/lk/getbyId`, {
@@ -94,8 +152,7 @@ export default function Selectlicence() {
           setLoading(false);
         })
         .catch((error) => {
-          console.error('Error fetching licence data:', error);
-          setError(error); // Set error state if an error occurs
+          setError(error);
           setLoading(false);
         }); 
      fetch(`${apiUrl}/device/getdevicesbyc`, {
@@ -114,7 +171,6 @@ export default function Selectlicence() {
             console.log(data);
           })
           .catch((error) => {
-            console.error('Error fetching licence data:', error);
             setError(error); // Set error state if an error occurs
             setLoading(false);
           }); 
@@ -223,10 +279,20 @@ export default function Selectlicence() {
                       Cette clé de licence n'est reconnue sur aucun appareil.
                   </div>)
               }
-              
             </div>
-            <button style={{display : 'none'}} className='btndave'
-            >Enregistrer</button>
+            <div className={changeData ?'btndaveV' : 'btndaveN'} disabled= {!changeData} onClick={HandledUpdateCHnagesClick}
+            >
+              <div style={{display : "flex" , flexDirection : "row" , justifyContent : "center" , alignContent : "center"}}> 
+              <Lottie 
+              className={LoadingA ? 'LottieL':'LottieLN'}
+              options={defaultOptionsA}
+              height={20} width={20}
+              />
+          <label style={{color : "#fff" , alignContent : 'center'}}>Enregistrer</label>
+          
+              </div>
+              </div>
+            <ToastContainer />
           </div>
       </div>
       </> : (<>

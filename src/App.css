@@ -307,10 +307,26 @@ product page
   flex-direction: column;
   gap: 15px;
 }
-.btndave{
-  background-color : #575757 ; 
-  border-radius :11 ;
+.btndaveN{
+  background-color : #3b78fc ; 
+  border-radius :5px ;
   padding: 10px 0 10px 0 ;
+  display: none;
+}
+.btndaveV{
+  background-color : #446bc0 ; 
+  border-radius :5px ;
+  padding: 10px 0 10px 0 ;
+  display: grid;
+  width: 150px;
+  grid-template-columns: 1fr;
+  padding: 10px 50px 10px 0;
+}
+.LottieL{
+  display: none;
+}
+.LottieLN{
+  display: inline;
 }
 .appnotdeclared{
   color : #767272;
