@@ -284,11 +284,11 @@ export default function Selectlicence() {
             >
               <div style={{display : "flex" , flexDirection : "row" , justifyContent : "center" , alignContent : "center"}}> 
               <Lottie 
-              className={LoadingA ? 'LottieL':'LottieLN'}
+              className={!LoadingA ? 'LottieL':'LottieLN'}
               options={defaultOptionsA}
               height={20} width={20}
               />
-          <label style={{color : "#fff" , alignContent : 'center'}}>Enregistrer</label>
+          <label style={{color : "#fff" , alignContent : 'center'}}>Enregistrer les modifications</label>
           
               </div>
               </div>
