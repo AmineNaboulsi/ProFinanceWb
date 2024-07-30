@@ -22,7 +22,7 @@ export default function Selectlicence() {
   const [licenceDevices, setlicenceDevices] = useState(null);
 
   const [loading, setLoading] = useState(true);
-  const [LoadingA, setLoadingA] = useState(true);
+  const [LoadingA, setLoadingA] = useState(false);
 
   const [error, setError] = useState(null);
   const [changeData, setchangeData] = useState(false);
@@ -284,7 +284,7 @@ export default function Selectlicence() {
             >
               <div style={{display : "flex" , flexDirection : "row" , justifyContent : "center" , alignContent : "center"}}> 
               <Lottie 
-              className={!LoadingA ? 'LottieL':'LottieLN'}
+              className={LoadingA ? 'LottieL':'LottieLN'}
               options={defaultOptionsA}
               height={20} width={20}
               />
