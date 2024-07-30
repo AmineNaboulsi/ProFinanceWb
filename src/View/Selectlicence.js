@@ -112,7 +112,7 @@ export default function Selectlicence() {
       .then((response) => response.json())
       .then((data) => {
         if(data.status){
-          toast.warning('Updated', {
+          toast.success(' Updated ', {
             position : 'bottom-right'
           });
           setchangeData(false);
@@ -234,13 +234,16 @@ export default function Selectlicence() {
                 </>
               ) : (<></>)}
              </div>
-            <div className='left-side-p3'>
+             {licence && licence.version==='demo' ? (<>
+              <div className='left-side-p3'>
             <label>Upgrade plan</label>
               <div className='upgradebtn'>
                 <IoIosRocket />
                 <label style={{  cursor: "pointer" , fontSize : 12}}>Upgrade</label>
               </div>
             </div>
+             </>): <></>}
+            
           </div>
           <div className='right-side-part'>
             <div className='right-side-p1'>
@@ -283,13 +286,7 @@ export default function Selectlicence() {
             <div className={changeData ?'btndaveV' : 'btndaveN'} disabled= {!changeData} onClick={HandledUpdateCHnagesClick}
             >
               <div style={{display : "flex" , flexDirection : "row" , justifyContent : "center" , alignContent : "center"}}> 
-              <Lottie 
-              className={LoadingA ? 'LottieL':'LottieLN'}
-              options={defaultOptionsA}
-              height={20} width={20}
-              />
-          <label style={{color : "#fff" , alignContent : 'center'}}>Enregistrer les modifications</label>
-          
+          <label style={{color : "#fff" , alignContent : 'center'}}>Enregistrer les modifications</label>  
               </div>
               </div>
             <ToastContainer />

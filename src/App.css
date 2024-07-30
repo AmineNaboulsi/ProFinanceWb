@@ -318,9 +318,7 @@ product page
   border-radius :5px ;
   padding: 10px 0 10px 0 ;
   display: grid;
-  width: 150px;
   grid-template-columns: 1fr;
-  padding: 10px 50px 10px 0;
 }
 .LottieL{
   display: none;
