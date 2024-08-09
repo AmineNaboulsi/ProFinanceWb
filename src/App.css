@@ -49,6 +49,9 @@ body{
   align-items: center;
   gap: 10px;
 } 
+.menuitemshaperesponsive{
+  display: none;
+} 
 
 
 /*
@@ -69,10 +72,11 @@ product page
 }
 .filter-product-bar{
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   padding: .9rem  1rem;
   align-items: center;
   flex-wrap: wrap;
+  gap: 15px;
 }
 .filter-product-bar ul{
   display: flex;
@@ -101,6 +105,16 @@ product page
   background-color: black;
   border-radius: 15px;
   color: #F3F3F5;
+  padding: .6rem 1.1rem;
+  cursor: pointer;
+}
+.dowload-data{
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  background-color: #107C41;
+  border-radius: 15px;
+  color: #f3f5f4;
   padding: .6rem 1.1rem;
   cursor: pointer;
 }
@@ -144,7 +158,7 @@ product page
 
 .parts{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust 200px to your preferred minimum column width */
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 15px;
@@ -625,4 +639,39 @@ product page
   width: 100%;
   height: 100vh;
   overflow: auto;
+}
+.allsidbar{
+  width: "fit-content";
+   height: "100vh" ;
+   background-color: "#ffff";
+ }
+
+/*-----------------------------------------------------------------------*/
+/*dashborad*/
+.fixed{
+  position:fixed;
+  z-index: 3;
+  background-color: #ebe5e500;
+  inset: 0;
+  border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.panelmenulist{
+  background-color: #817d7d;
+  z-index: 3;
+  width: 300px;
+  height: 250px;
+  margin-top: 25px;
+  border-radius: 12px;
+}
+@media(max-width :375px){
+  .fixed{
+      display: none;
+  }
+  .menusidebar{
+    display: none;
+  }
+
 }

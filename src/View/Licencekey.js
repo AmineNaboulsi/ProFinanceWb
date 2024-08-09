@@ -7,6 +7,8 @@ import '../App.css'
 import Cookies from 'js-cookie';
 import LoadingAnimation from '../lotties/loading.json';
 import Lottie from 'react-lottie';
+import * as XLSX from "xlsx";
+import { BsFiletypeXlsx } from "react-icons/bs";
 
 const ImageCellRenderer = ({ value }) => (
   <div
@@ -189,18 +191,41 @@ export default function Licencekey (){
       <h4>No Rows</h4></>)}</>)}
     </div>
   }
+  const exportToExcel = () => {
+    // Convert JSON data to worksheet
+    const ws = XLSX.utils.json_to_sheet(rows);
+    // Create a new workbook
+    const wb = XLSX.utils.book_new();
+    // Append the worksheet to the workbook
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
+    // Create a Blob from the workbook
+    const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([wbout], { type: "application/octet-stream" });
+
+    // Create a URL for the Blob and trigger the download
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "data.xlsx";
+    a.click();
+    URL.revokeObjectURL(url); // Clean up the URL
+  };
   return (
     <div className='pageframe'>
       <h1>Licence</h1>
       <div className='card-product-list'>
         <div className='filter-product-bar'>
-          <ul>
-          </ul>
+         
+            <div className='dowload-data' onClick={exportToExcel}>
+              <BsFiletypeXlsx />
+            <span>Dowload </span>
+            </div>   
             <div className='add-product' onClick={adddproductClick}>
               <IoMdAdd />
               <span>New Key</span>
-            </div>      
+            </div>   
+           
         </div>
         <DataGrid 
           autoHeight         

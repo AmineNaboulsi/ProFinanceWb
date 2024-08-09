@@ -11,19 +11,21 @@ import Cookies from 'js-cookie';
 
 export function Slidebar() {
   return (
-    <div style={{ width: "fit-content", height: "100vh", backgroundColor: "#ffff" }} >
-      <Sidebar >
+    <>
+    <div className='allsidbar'  >
+      <Sidebar className='slide_bar'>
         <div>
           <div className='sidebar-header' style={{ backgroundColor: "#ffff", height : "100vh", display: "flex",flexDirection :"column" , justifyContent :"space-between" }}>
             <div>
               <h1 style={{ textAlign: "center" }}>Gest Finnace</h1>
               <Menu>
-                <MenuItem component={<Link to="/home" />}>
+              <MenuItem component={<Link to="/home" />}>
                   <div className='menuitemshape'>
                   <MdDashboard />
                     <span >Dashborad</span>
                   </div>
                 </MenuItem>
+               
                 <MenuItem component={<Link to="/home/licencekey" />}>
                   <div className='menuitemshape'>
                   <FaKey />
@@ -31,6 +33,7 @@ export function Slidebar() {
                     <span >Licence Key</span>
                   </div>
                 </MenuItem>
+              
                 <MenuItem component={<Link to="/home/devices" />}>
                   <div className='menuitemshape'>
                   <MdDesktopWindows />
@@ -38,12 +41,15 @@ export function Slidebar() {
                     <span >Devices</span>
                   </div>
                 </MenuItem>
+              
+                
                 <MenuItem component={<Link to="/home/logs" />}>
                   <div className='menuitemshape'>
                   <TbLogs />
                     <span >Logs</span>
                   </div>
                 </MenuItem>
+               
                 <MenuItem component={<Link to="/" />} onClick={()=>{
                     Cookies.remove('authToken')
                   }}>
@@ -63,5 +69,8 @@ export function Slidebar() {
       </Sidebar>
 
     </div>
+
+    </>
+    
   )
 }

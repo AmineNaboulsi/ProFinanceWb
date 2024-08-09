@@ -1,10 +1,14 @@
 import React ,{ useState } from 'react';
 import { DiMsqlServer } from "react-icons/di";
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+
 import { ToastContainer, toast } from 'react-toastify';
 import Lottie from 'react-lottie';
 import LoadingAnimation from '../lotties/loading.json';
 function Addlicence (){
+  const navigate = useNavigate();
+
   const [licenceData ,  setlicenceData] = useState({
     client:"" ,
     type:"monopost" ,
@@ -63,6 +67,8 @@ function Addlicence (){
           toast.success(data.status, {
             position : 'bottom-right'
           });
+          setTimeout(()=>{ navigate(-1);},1000)
+         
         }else{
           toast.error(data.error|| 'failed', {
             position : 'bottom-right'
